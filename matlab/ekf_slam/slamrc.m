@@ -7,7 +7,7 @@ p = {
     [ slam_dir '/libslam']
     %[ slam_dir '/simulate:']
     [ slam_dir '']
-    }
+    };
 
 for i = 1:size(p, 1)
     path(p{i},path);

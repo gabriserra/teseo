@@ -7,7 +7,7 @@
 %   W: set of external landmarks
 W = cloister(-4,4,-4,4,40);	% Type 'help cloister' for help
 %   N: number of landmarks
-N = size(W,2);
+NN = size(W,2);
 %   R: robot pose [x ; y ; alpha]
 % R = [0;-2;0];
 R = [0;-3.5;0];
@@ -15,15 +15,17 @@ R = [0;-3.5;0];
 U = [0.05 ; 0.015];   % fixing advance and turn increments creates a circle
 %U = [0.02 ; 0.005];   % fixing advance and turn increments creates a circle
 
+% Maximum number of landmarks at any time
+N = 32;
+
 % I.2 ESTIMATOR
 % Map: Gaussian {x,P}
 % x: state vector's mean
-x = zeros(numel(R), 1);
+x = zeros(numel(R) + 2*N, 1);
 % P: state vector's covariances matrix
 P = zeros(numel(x),numel(x));
 
-landmarks   = [];        % See Help Note #11 above
-landmarksc  = [];
+landmarksc  = zeros(1,N);
 
 % Place robot in map
 r           = [1 2 3];  % set robot pointer
@@ -85,7 +87,7 @@ lG = line(...
     'ydata',[ ]);
 
 % Estimated landmark ellipses, green
-leG = zeros(1,N);
+leG = zeros(1,NN);
 for i = 1:numel(leG)
     leG(i) = line(...
         'linestyle','-',...
@@ -96,8 +98,7 @@ for i = 1:numel(leG)
 end
 
 % II. TEMPORAL LOOP
-
-m = [];
+m = 0;
 
 % NOISE USED FOR POSITION
 q = [.01;.02];      % amplitude or standard deviation
@@ -115,8 +116,8 @@ for t = 1:2000
     % b. observations
     npoints = 1;
     observeDist = 5;
-    Y = zeros(2, N);
-    for j = 1:N
+    Y = zeros(2, NN);
+    for j = 1:NN
         v = s .* randn(2,1);
         obs_j = W(:, j) + v;
         dist_j = R(1:2) - obs_j;
@@ -132,13 +133,13 @@ for t = 1:2000
     % I now have i points detected stored in Y, but I don't know to
     % which landmarks they are associated with
     
-    [x, P, m, landmarks, landmarksc] = ekf_slam(x, P, m, landmarks, landmarksc, U+n, Y);
+    [x, P, m, landmarksc] = ekf_slam(x, P, m, landmarksc, U+n, Y, s, q);
     
     % II.3 GRAPHICS
     
     % Simulated robot
     Rshape = fromFrame(R, Rshape0);
-    set(RG, 'xdata', Rshape(1,:), 'ydata', Rshape(2,:));
+    xset(RG, 'xdata', Rshape(1,:), 'ydata', Rshape(2,:));
     
     % Estimated robot
     Rshape = fromFrame(x(r), Rshape0);
@@ -158,14 +159,24 @@ for t = 1:2000
     
     % ACTIVE Estimated landmarks
     % lids = find(landmarks(1,:)); % all indices of mapped landmarks
-    lids = m;
-    lx   = x(landmarks(1,lids)); % all x-coordinates
-    ly   = x(landmarks(2,lids)); % all y-coordinates
+    lids = 3+1:3+m*2;
+    idxx = mod(lids,2);
+    
+    idx = find(~idxx);
+    idy = find(idxx);
+    
+    lx   = x(3+idx); % all x-coordinates
+    ly   = x(3+idy); % all y-coordinates
     set(lG, 'xdata', lx, 'ydata', ly);
     
     % Estimated landmark ellipses -- one per landmark
-    for i = lids
-        l       = landmarks(:,i);
+    for i = 1:m
+        l = 3 + 2*(i-1);
+        l = [
+            l+1;
+            l+2
+            ];
+        
         le      = x(l);
         LE      = P(l,l);
         %[xx,yy] = cov2elli(le,LE,3,16);
