@@ -1,0 +1,24 @@
+<!-- PHYSICS SETTINGS -->
+<physics name='default_physics' default='0' type='ode'>
+    <max_step_size>0.001</max_step_size>
+    <real_time_factor>1</real_time_factor>
+    <real_time_update_rate>1000</real_time_update_rate>
+</physics>
+
+<!-- GRAVITY FORCE -->
+<gravity>0 0 -9.8</gravity>
+
+<!-- MAGNETIC FIELD -->
+<magnetic_field>6e-06 2.3e-05 -4.2e-05</magnetic_field>
+
+<!-- ATMOSPHERE -->
+<atmosphere type='adiabatic'/>
+
+<!-- COORDINATE REFERENCE -->
+<spherical_coordinates>
+    <surface_model>EARTH_WGS84</surface_model>
+    <latitude_deg>0</latitude_deg>
+    <longitude_deg>0</longitude_deg>
+    <elevation>0</elevation>
+    <heading_deg>0</heading_deg>
+</spherical_coordinates>
