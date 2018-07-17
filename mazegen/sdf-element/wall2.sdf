@@ -1,0 +1,95 @@
+<!-- MAZE WALL - 2 PIECES / RIGHT-UPPER -->
+<model name='Maze_L_RU'>
+    <pose frame=''>0.142 0.142 0 0 -0 0</pose>
+    <link name='Wall_11'>
+    <collision name='Wall_11_Collision'>
+        <geometry>
+        <box>
+            <size>0.294 0.01 0.25</size>
+        </box>
+        </geometry>
+        <pose frame=''>0 0 0.125 0 -0 0</pose>
+        <max_contacts>10</max_contacts>
+        <surface>
+        <contact>
+            <ode/>
+        </contact>
+        <bounce/>
+        <friction>
+            <torsional>
+            <ode/>
+            </torsional>
+            <ode/>
+        </friction>
+        </surface>
+    </collision>
+    <visual name='Wall_11_Visual'>
+        <pose frame=''>0 0 0.125 0 -0 0</pose>
+        <geometry>
+        <box>
+            <size>0.294 0.01 0.25</size>
+        </box>
+        </geometry>
+        <material>
+        <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Grey</name>
+        </script>
+        <ambient>1 1 1 1</ambient>
+        </material>
+        <meta>
+        <layer>0</layer>
+        </meta>
+    </visual>
+    <pose frame=''>0 -0.142 0 0 -0 0</pose>
+    <self_collide>0</self_collide>
+    <kinematic>0</kinematic>
+    <enable_wind>0</enable_wind>
+    </link>
+    <link name='Wall_12'>
+    <collision name='Wall_12_Collision'>
+        <geometry>
+        <box>
+            <size>0.294 0.01 0.25</size>
+        </box>
+        </geometry>
+        <pose frame=''>0 0 0.125 0 -0 0</pose>
+        <max_contacts>10</max_contacts>
+        <surface>
+        <contact>
+            <ode/>
+        </contact>
+        <bounce/>
+        <friction>
+            <torsional>
+            <ode/>
+            </torsional>
+            <ode/>
+        </friction>
+        </surface>
+    </collision>
+    <visual name='Wall_12_Visual'>
+        <pose frame=''>0 0 0.125 0 -0 0</pose>
+        <geometry>
+        <box>
+            <size>0.294 0.01 0.25</size>
+        </box>
+        </geometry>
+        <material>
+        <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Grey</name>
+        </script>
+        <ambient>1 1 1 1</ambient>
+        </material>
+        <meta>
+        <layer>0</layer>
+        </meta>
+    </visual>
+    <pose frame=''>0.142 0 0 0 -0 1.5708</pose>
+    <self_collide>0</self_collide>
+    <kinematic>0</kinematic>
+    <enable_wind>0</enable_wind>
+    </link>
+    <static>1</static>
+</model>
