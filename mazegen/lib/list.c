@@ -1,10 +1,16 @@
-// LIST.H
-// A simpler implementation of list using std C.
+/**
+ * LIST
+ * A simple linked list implementation using standard C library
+ */
 
 #include "list.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+// -----------------------------------------------------
+// PRIVATE METHOD
+// -----------------------------------------------------
 
 /**
  * Allocate a block of memory and fill with 0s. Exit in case of error 
@@ -23,6 +29,10 @@ static void* alloc(int count, size_t dimension) {
 	printf("Out of memory. Please restart your machine.");
 	exit(-1);
 }
+
+// -----------------------------------------------------
+// PUBLIC METHOD
+// -----------------------------------------------------
 
 /**
  * Initialize the list in order to be used

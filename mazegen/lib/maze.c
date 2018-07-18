@@ -1,3 +1,9 @@
+/**
+ * MAZE
+ * Implementation depth-first-search algorithm
+ * on a simple graph in order to build a maze
+ */
+
 #include "maze.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -16,7 +22,7 @@
  * [IN]     uint8_t: explorable directions from the node towards neighbors
  * [IN]     block: primitive type of block (wall, free, ..)
  * [OUT]    void
- **/
+ */
 static void init_node(struct node* n, uint8_t i, uint8_t j, uint8_t dirs, enum block type) {
     n->x = i;
     n->y = j;
@@ -31,7 +37,7 @@ static void init_node(struct node* n, uint8_t i, uint8_t j, uint8_t dirs, enum b
  * [IN]     maze*: maze structure
  * [IN]     node*: pointer of first node
  * [OUT]    node*: pointer of second node
- **/
+ */
 static void remove_wall(struct maze* m, struct node* start, struct node* dest) {
     uint8_t         x, y;   // x, y coordinate of node between start and dest
     struct node*    mid;    // pointer of node between start and dest
@@ -51,7 +57,7 @@ static void remove_wall(struct maze* m, struct node* start, struct node* dest) {
  * [IN]     maze*: maze structure
  * [IN]     node*: pointer of start
  * [OUT]    uint8_t: direction of path
- **/
+ */
 static struct node* get_neighbor(struct maze* m, struct node* start, uint8_t dir) {
     struct node* neighbor = NULL;
 
@@ -85,7 +91,7 @@ static struct node* get_neighbor(struct maze* m, struct node* start, uint8_t dir
  * 
  * [IN]     node*: pointer to node from which start
  * [OUT]    node*: pointer to neighbor visited
- **/
+ */
 static struct node* link(struct maze* m, struct node* start) {
 	uint8_t         new_dir;    // randomly generated direction
 	struct node*    neighbor;   // pointer to neighbor
@@ -136,7 +142,7 @@ static struct node* link(struct maze* m, struct node* start) {
  * [IN]     uint8_t: maze width (number of block)
  * [IN]     uint8_t: maze height (number of block)
  * [OUT]    int: -1 in case of low mem availability, 0 in case of success
- **/
+ */
 int init_maze(struct maze* m, uint8_t width, uint8_t height) {
 	int             i, j;       // iterate over the graph
     struct node*    n;          // temp pointer to nodes
@@ -174,7 +180,7 @@ int init_maze(struct maze* m, uint8_t width, uint8_t height) {
  * 
  * [IN]     maze*: pointer to the maze struct
  * [OUT]    void
- **/
+ */
 void create_maze(struct maze* m) {
     struct node* start;    // node from which begin to explore graph
     struct node* neighbor; // node reached at each step of exploration
@@ -199,7 +205,7 @@ void create_maze(struct maze* m) {
  * 
  * [IN]     maze*: pointer to the maze struct
  * [OUT]    void
- **/
+ */
 void draw_maze(struct maze* m) {
 	int i, j;   // iterate over the graph
 

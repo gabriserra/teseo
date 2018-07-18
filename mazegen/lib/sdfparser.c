@@ -1,3 +1,9 @@
+/**
+ * SDFPARSER
+ * A self-contained library to parse SDF files
+ * and build a DOM (tree-based) model of the document
+ */
+
 #include "sdfparser.h"
 #include "list.h"
 #include <stdlib.h>
@@ -5,11 +11,12 @@
 
 // -------------------------------------
 // 
-// SDF PRIVATE STRUCTURES
+// PRIVATE: SDF PARSER STRUCTURES
 //
 // -------------------------------------
 
 /**
+ * ENUM PARSER_STATE
  * Represent the current parser state
  */
 enum parser_state {
@@ -22,8 +29,9 @@ enum parser_state {
 };
 
 /**
+ * STRUCT SDF_PARSER
  * Represent a parser that is used to parse
- * a file and build a document
+ * a file and build a document DOM
  */
 struct sdf_parser {
 	enum parser_state 	state;		// current state of parser
@@ -239,6 +247,7 @@ void sdf_feature_extract(struct sdf_parser* p, struct sdf_string** s, char* sep)
 
 /**
  * Extract the entire list of attributes of a tag
+ * <tag attr1='value' attr2='value2' ..>
  * 
  * [IN] struct parser*: pointer to the parser
  * [OUT] void
@@ -285,6 +294,7 @@ void sdf_content_extract(struct sdf_parser* p) {
 
 /**
  * Extract the tag name from a tag
+ * <name ..
  * 
  * [IN] struct parser*: pointer to the parser
  * [OUT] void
@@ -301,6 +311,7 @@ void sdf_element_extract(struct sdf_parser* p) {
 /**
  * Extract the tag name from a tag closing and leave the result
  * in the element passed
+ * </name>
  * 
  * [IN] struct parser*: pointer to the parser
  * [IN] struct sdf_element*: pointer to the element in which result is left
@@ -591,8 +602,10 @@ void sdf_attribute_print(struct sdf_attribute* attr, FILE* f) {
 /**
  * Print into file F the element specified
  * 
- * [IN] struct sdf_attribute*: pointer to the struct that contains attribute
- * [OUT] FILE* f: 1 if correct, 0 otherwise
+ * [IN] struct sdf_element*: pointer to the element that must be printed
+ * [IN] int: number of tabs for this element (pretty print)
+ * [IN] FILE*: pointer to the file in which print
+ * [OUT] void
  */
 void sdf_element_print(struct sdf_element* e, int tab_level, FILE* f) {
 	// print tabs and tag name
@@ -840,10 +853,10 @@ void sdf_element_append_sibling(struct sdf_element** sibling, struct sdf_element
 }
 
 /**
- * Append the element e to sibling as children
+ * Append the element e to father as children
  * 
  * [IN] struct sdf_element**: pointer to SDF element in which append e
- * [IN] struct sdf_element*: element taht that must be appended
+ * [IN] struct sdf_element*: element that must be appended
  * [OUT] void
  */
 void sdf_element_append(struct sdf_element** father, struct sdf_element* e) {
@@ -853,6 +866,19 @@ void sdf_element_append(struct sdf_element** father, struct sdf_element* e) {
 		(*father)->children = e;
 }
 
+// -------------------------------------
+// 
+// PUBLIC: SDF STRING METHODS
+//
+// -------------------------------------
+
+/**
+ * Replace the string contained into the struct with the new one
+ * 
+ * [IN] struct sdf_string*: pointer to SDF string in which modify buffer
+ * [IN] char*: pointer to the new string (must be 0-termined)
+ * [OUT] void
+ */
 void sdf_replace_string(struct sdf_string* s, char* new_str) {
 	free(s->buffer);
 	s->length = strlen(new_str);

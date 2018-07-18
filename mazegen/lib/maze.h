@@ -1,8 +1,34 @@
-// -----------------------------------------------------
-// MAZE_H
-// Implementation depth-first-search algorithm
-// on a simple graph in order to build a maze
-// -----------------------------------------------------
+/**
+ * MAZE
+ * Implementation depth-first-search algorithm
+ * on a simple graph in order to build a maze
+ *
+ * BSD 2-Clause License
+ *
+ * Copyright (c) 2018, Gabriele Ara, Gabriele Serra
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * * Redistributions of source code must retain the above copyright notice, this
+ * list of conditions and the following disclaimer.
+ *
+ * * Redistributions in binary form must reproduce the above copyright notice,
+ * this list of conditions and the following disclaimer in the documentation
+ * and/or other materials provided with the distribution.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+ * DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+ * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+ * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
 
 #ifndef MAZE_H
 #define MAZE_H
@@ -18,9 +44,9 @@
 
 /**
  * ENUM BLOCK
- * Primitive type of maze-block
- **/
-enum block { 
+ * Possible type of a cell of graph
+ */
+enum block {
     NONE,               // no block (free place)
     WALL                // wall
 };
@@ -28,7 +54,7 @@ enum block {
 /**
  * STRUCT NODE
  * Contains info for each node of the graph
- **/
+ */
 struct node {
     struct node*    parent; // a pointer to parent node (if one)
     uint8_t         x;      // x position of the graph-node in the maze
@@ -41,16 +67,12 @@ struct node {
 /**
  * STRUCT MAZE
  * Contains the entire graph and maze bounds
- **/
+ */
 struct maze {
     struct node*    graph;  // root of the graph
     uint8_t         width;  // maze width (number of block)
     uint8_t         height; // maze height (number of block)
 };
-
-// -----------------------------------------------------
-// PUBLIC METHOD
-// -----------------------------------------------------
 
 /**
  * Init the maze 
@@ -59,7 +81,7 @@ struct maze {
  * [IN]     uint8_t: maze width (number of block)
  * [IN]     uint8_t: maze height (number of block)
  * [OUT]    int: -1 in case of low mem availability, 0 in case of success
- **/
+ */
 int init_maze(struct maze* m, uint8_t width, uint8_t height);
 
 /**
@@ -67,7 +89,7 @@ int init_maze(struct maze* m, uint8_t width, uint8_t height);
  * 
  * [IN]     maze*: pointer to the maze struct
  * [OUT]    void
- **/
+ */
 void create_maze(struct maze* m);
 
 /**
@@ -75,7 +97,7 @@ void create_maze(struct maze* m);
  * 
  * [IN]     maze*: pointer to the maze struct
  * [OUT]    void
- **/
+ */
 void draw_maze(struct maze* m);
 
 
