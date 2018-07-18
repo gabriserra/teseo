@@ -77,7 +77,7 @@ r = [1 2 3];
 % Estimate robot movement
 [x,P] = slam2d_move_estimator(x,P,u,m,q);
 
-% For each point, calculate its closes landmark with Mahalanolis distance,
+% For each point, calculate its closes landmark with Mahalanobis distance,
 % then if the distance is under a certain treshold update said landmark
 % (then skip said landmark in the future)
 
@@ -207,7 +207,7 @@ while accepted < 1 && ~isempty(remaining_points_idx) && m < N
     
     distmin = min(dist(:, j));
     
-    % If the Mahalanoulis distance is over a certain treshold we add the
+    % If the Mahalanobis distance is over a certain treshold we add the
     % new point to landmarks set
     if isempty(distmin) || distmin > 40
         Yj = Y(:, j);
